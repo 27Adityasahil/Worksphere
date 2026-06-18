@@ -5,7 +5,7 @@ import LeaveRequest from '../models/LeaveRequest';
 import AttendanceViolation from '../models/AttendanceViolation';
 import { AuthRequest } from '../middleware/authMiddleware';
 
-export const getAdminStats = async (req: Request, res: Response): Promise<void> => {
+export const getAdminStats = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const totalEmployees = await EmployeeProfile.countDocuments();
 
@@ -21,7 +21,7 @@ export const getAdminStats = async (req: Request, res: Response): Promise<void> 
     });
 
     const pendingLeaves = await LeaveRequest.countDocuments({
-      status: 'Pending'
+      status: 'Pending' as any
     });
 
     const recentViolations = await AttendanceViolation.find()
@@ -67,12 +67,12 @@ export const getEmployeeStats = async (req: AuthRequest, res: Response): Promise
 
     const approvedLeaves = await LeaveRequest.countDocuments({
       user: userId,
-      status: 'Approved'
+      status: 'Approved' as any
     });
 
     const pendingLeaves = await LeaveRequest.countDocuments({
       user: userId,
-      status: 'Pending'
+      status: 'Pending' as any
     });
 
     res.status(200).json({

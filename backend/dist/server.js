@@ -7,10 +7,8 @@ const http_1 = __importDefault(require("http"));
 const app_1 = __importDefault(require("./app"));
 const db_1 = __importDefault(require("./config/db"));
 const socket_io_1 = require("socket.io");
-// Connect to database
 (0, db_1.default)();
 const server = http_1.default.createServer(app_1.default);
-// Setup Socket.io
 const io = new socket_io_1.Server(server, {
     cors: {
         origin: '*',

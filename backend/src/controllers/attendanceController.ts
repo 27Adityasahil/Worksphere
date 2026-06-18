@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { AuthRequest } from '../middleware/authMiddleware';
 import Attendance from '../models/Attendance';
 import Settings from '../models/Settings';
 import AttendanceViolation from '../models/AttendanceViolation';
@@ -35,7 +36,7 @@ const checkGeofence = async (userId: any, lat: number, lng: number): Promise<{ i
   }
   return { isValid: true, distance };
 };
-export const clockIn = async (req: Request, res: Response): Promise<void> => {
+export const clockIn = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { lat, lng } = req.body;
     if (!lat || !lng) {
@@ -75,7 +76,7 @@ export const clockIn = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
-export const clockOut = async (req: Request, res: Response): Promise<void> => {
+export const clockOut = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { lat, lng } = req.body;
     if (!lat || !lng) {
@@ -111,7 +112,7 @@ export const clockOut = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
-export const getMyAttendance = async (req: Request, res: Response): Promise<void> => {
+export const getMyAttendance = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const attendance = await Attendance.find({ user: req.user?._id }).sort('-date');
     res.status(200).json({ success: true, count: attendance.length, data: attendance });
@@ -119,7 +120,7 @@ export const getMyAttendance = async (req: Request, res: Response): Promise<void
     res.status(500).json({ success: false, error: error.message });
   }
 };
-export const getAllAttendance = async (req: Request, res: Response): Promise<void> => {
+export const getAllAttendance = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const attendance = await Attendance.find()
       .populate({
@@ -136,7 +137,7 @@ export const getAllAttendance = async (req: Request, res: Response): Promise<voi
     res.status(500).json({ success: false, error: error.message });
   }
 };
-export const getViolations = async (req: Request, res: Response): Promise<void> => {
+export const getViolations = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const violations = await AttendanceViolation.find()
       .populate({

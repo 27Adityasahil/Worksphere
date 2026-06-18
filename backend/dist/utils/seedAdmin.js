@@ -45,64 +45,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserRole = void 0;
-const mongoose_1 = __importStar(require("mongoose"));
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
-var UserRole;
-(function (UserRole) {
-    UserRole["ADMIN"] = "Admin";
-    UserRole["EMPLOYEE"] = "Employee";
-    UserRole["MANAGER"] = "Manager";
-})(UserRole || (exports.UserRole = UserRole = {}));
-const userSchema = new mongoose_1.Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        lowercase: true,
-    },
-    password: {
-        type: String,
-        select: false,
-    },
-    role: {
-        type: String,
-        enum: Object.values(UserRole),
-        default: UserRole.EMPLOYEE,
-    },
-    isFirstLogin: {
-        type: Boolean,
-        default: true,
-    },
-    isActive: {
-        type: Boolean,
-        default: true,
-    },
-    employeeProfile: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: 'EmployeeProfile'
+const mongoose_1 = __importDefault(require("mongoose"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const User_1 = __importStar(require("../models/User"));
+const EmployeeProfile_1 = __importDefault(require("../models/EmployeeProfile"));
+dotenv_1.default.config();
+const seedAdmin = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield mongoose_1.default.connect(process.env.MONGO_URI);
+        console.log('Connected to MongoDB...');
+        const adminEmail = process.env.ADMIN_EMAIL || 'admin@worksphere.com';
+        const adminPassword = process.env.ADMIN_PASSWORD || 'adminpassword123';
+        const adminExists = yield User_1.default.findOne({ email: adminEmail });
+        if (adminExists) {
+            console.log('Admin user already exists!');
+            process.exit(0);
+        }
+        const adminUser = yield User_1.default.create({
+            email: adminEmail,
+            password: adminPassword,
+            role: User_1.UserRole.ADMIN,
+            isFirstLogin: false,
+            isActive: true,
+        });
+        const adminProfile = yield EmployeeProfile_1.default.create({
+            user: adminUser._id,
+            employeeId: 'ADM-0001',
+            firstName: 'System',
+            lastName: 'Administrator',
+            department: 'Management',
+            designation: 'Super Admin',
+            joiningDate: new Date(),
+            contactNumber: '1234567890',
+        });
+        adminUser.employeeProfile = adminProfile._id;
+        yield adminUser.save();
+        console.log('Admin user successfully seeded!');
+        console.log('---------------------------------');
+        console.log(`Email: ${adminEmail}`);
+        console.log(`Password: ${adminPassword}`);
+        console.log('---------------------------------');
+        process.exit(0);
     }
-}, {
-    timestamps: true
+    catch (error) {
+        console.error('Error seeding admin:', error);
+        process.exit(1);
+    }
 });
-userSchema.pre('save', function () {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!this.isModified('password')) {
-            return;
-        }
-        if (this.password) {
-            const salt = yield bcryptjs_1.default.genSalt(10);
-            this.password = yield bcryptjs_1.default.hash(this.password, salt);
-        }
-    });
-});
-userSchema.methods.comparePassword = function (candidatePassword) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!this.password)
-            return false;
-        return yield bcryptjs_1.default.compare(candidatePassword, this.password);
-    });
-};
-const User = mongoose_1.default.model('User', userSchema);
-exports.default = User;
+seedAdmin();

@@ -15,9 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.resetPassword = exports.logoutUser = exports.loginUser = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const generateToken_1 = __importDefault(require("../utils/generateToken"));
-// @desc    Auth user & get token
-// @route   POST /api/auth/login
-// @access  Public
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
@@ -44,20 +41,16 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.loginUser = loginUser;
-// @desc    Logout user / clear cookie
-// @route   POST /api/auth/logout
-// @access  Public
 const logoutUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.cookie('jwt', '', {
         httpOnly: true,
-        expires: new Date(0)
+        expires: new Date(0),
+        secure: process.env.NODE_ENV !== 'development',
+        sameSite: 'none'
     });
     res.status(200).json({ success: true, message: 'Logged out successfully' });
 });
 exports.logoutUser = logoutUser;
-// @desc    Reset password (required for first login)
-// @route   POST /api/auth/reset-password
-// @access  Public
 const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, tempPassword, newPassword } = req.body;

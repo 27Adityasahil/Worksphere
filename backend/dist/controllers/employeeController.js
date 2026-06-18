@@ -50,19 +50,14 @@ const User_1 = __importStar(require("../models/User"));
 const EmployeeProfile_1 = __importDefault(require("../models/EmployeeProfile"));
 const sendEmail_1 = __importDefault(require("../utils/sendEmail"));
 const crypto_1 = __importDefault(require("crypto"));
-// Helper to generate a random temporary password
 const generateTempPassword = () => {
     return crypto_1.default.randomBytes(6).toString('hex');
 };
-// Helper to generate Employee ID
 const generateEmployeeId = () => __awaiter(void 0, void 0, void 0, function* () {
     const count = yield EmployeeProfile_1.default.countDocuments();
     const nextId = count + 1;
     return `EMP-${nextId.toString().padStart(4, '0')}`;
 });
-// @desc    Create new employee
-// @route   POST /api/employees
-// @access  Private/Admin
 const createEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, firstName, lastName, department, designation, joiningDate, contactNumber, role } = req.body;
@@ -73,7 +68,6 @@ const createEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function*
         }
         const tempPassword = generateTempPassword();
         const employeeId = yield generateEmployeeId();
-        // Create user
         const user = yield User_1.default.create({
             email,
             password: tempPassword,
@@ -81,7 +75,6 @@ const createEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function*
             isFirstLogin: true,
             isActive: true
         });
-        // Create employee profile
         const profile = yield EmployeeProfile_1.default.create({
             user: user._id,
             employeeId,
@@ -92,20 +85,14 @@ const createEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function*
             joiningDate,
             contactNumber
         });
-        // Link profile to user
         user.employeeProfile = profile._id;
         yield user.save();
-        // Send Onboarding Email
         const message = `
       Hello ${firstName},
-
       Welcome to WorkSphere! Your account has been created successfully.
-      
       Your Employee ID: ${employeeId}
       Your Temporary Password: ${tempPassword}
-
       Please login using this temporary password. You will be required to reset it upon your first login.
-
       Regards,
       HR Team
     `;
@@ -118,11 +105,16 @@ const createEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function*
         }
         catch (err) {
             console.error('Email could not be sent', err);
-            // We don't fail the request if email fails, but we should log it
         }
+        console.log(`\n=========================================`);
+        console.log(`[DEV] NEW EMPLOYEE CREATED`);
+        console.log(`[DEV] Email: ${email}`);
+        console.log(`[DEV] Temporary Password: ${tempPassword}`);
+        console.log(`=========================================\n`);
         res.status(201).json({
             success: true,
-            data: profile
+            data: profile,
+            tempPassword
         });
     }
     catch (error) {
@@ -130,9 +122,6 @@ const createEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.createEmployee = createEmployee;
-// @desc    Get all employees
-// @route   GET /api/employees
-// @access  Private
 const getEmployees = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const employees = yield EmployeeProfile_1.default.find().populate('user', 'email role isActive');
@@ -143,9 +132,6 @@ const getEmployees = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.getEmployees = getEmployees;
-// @desc    Get single employee
-// @route   GET /api/employees/:id
-// @access  Private
 const getEmployeeById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const employee = yield EmployeeProfile_1.default.findById(req.params.id).populate('user', 'email role isActive');
@@ -160,9 +146,6 @@ const getEmployeeById = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.getEmployeeById = getEmployeeById;
-// @desc    Update employee
-// @route   PUT /api/employees/:id
-// @access  Private/Admin
 const updateEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let employee = yield EmployeeProfile_1.default.findById(req.params.id);

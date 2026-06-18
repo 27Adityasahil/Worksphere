@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
+import { AuthRequest } from '../middleware/authMiddleware';
 import Payroll from '../models/Payroll';
-export const generatePayroll = async (req: Request, res: Response): Promise<void> => {
+export const generatePayroll = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { user, month, year, basicSalary, allowances, deductions } = req.body;
     if (!user || !month || !year || basicSalary === undefined) {
@@ -26,7 +27,7 @@ export const generatePayroll = async (req: Request, res: Response): Promise<void
     }
   }
 };
-export const getAllPayrolls = async (req: Request, res: Response): Promise<void> => {
+export const getAllPayrolls = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const payrolls = await Payroll.find()
       .populate({
@@ -43,7 +44,7 @@ export const getAllPayrolls = async (req: Request, res: Response): Promise<void>
     res.status(500).json({ success: false, error: error.message });
   }
 };
-export const getMyPayrolls = async (req: Request, res: Response): Promise<void> => {
+export const getMyPayrolls = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const payrolls = await Payroll.find({ user: req.user?._id }).sort({ year: -1, month: -1 });
     res.status(200).json({ success: true, count: payrolls.length, data: payrolls });
@@ -51,7 +52,7 @@ export const getMyPayrolls = async (req: Request, res: Response): Promise<void> 
     res.status(500).json({ success: false, error: error.message });
   }
 };
-export const updatePayrollStatus = async (req: Request, res: Response): Promise<void> => {
+export const updatePayrollStatus = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { status } = req.body;
     if (!status || !['Pending', 'Paid'].includes(status)) {

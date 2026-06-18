@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
+import { AuthRequest } from '../middleware/authMiddleware';
 import LeaveRequest, { LeaveStatus } from '../models/LeaveRequest';
-export const submitLeaveRequest = async (req: Request, res: Response): Promise<void> => {
+export const submitLeaveRequest = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { leaveType, startDate, endDate, reason } = req.body;
     if (!leaveType || !startDate || !endDate || !reason) {
@@ -24,7 +25,7 @@ export const submitLeaveRequest = async (req: Request, res: Response): Promise<v
     res.status(500).json({ success: false, error: error.message });
   }
 };
-export const getMyLeaves = async (req: Request, res: Response): Promise<void> => {
+export const getMyLeaves = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const leaves = await LeaveRequest.find({ user: req.user?._id }).sort('-createdAt');
     res.status(200).json({ success: true, count: leaves.length, data: leaves });
@@ -32,7 +33,7 @@ export const getMyLeaves = async (req: Request, res: Response): Promise<void> =>
     res.status(500).json({ success: false, error: error.message });
   }
 };
-export const getAllLeaves = async (req: Request, res: Response): Promise<void> => {
+export const getAllLeaves = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const leaves = await LeaveRequest.find()
       .populate({
@@ -49,7 +50,7 @@ export const getAllLeaves = async (req: Request, res: Response): Promise<void> =
     res.status(500).json({ success: false, error: error.message });
   }
 };
-export const updateLeaveStatus = async (req: Request, res: Response): Promise<void> => {
+export const updateLeaveStatus = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { status, adminComment } = req.body;
     if (!Object.values(LeaveStatus).includes(status)) {

@@ -1,3 +1,4 @@
+import { UserRole } from '../models/User';
 import express from 'express';
 import { protect, authorize } from '../middleware/authMiddleware';
 import {

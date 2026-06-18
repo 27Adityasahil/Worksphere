@@ -27,7 +27,6 @@ const sendEmail = (options) => __awaiter(void 0, void 0, void 0, function* () {
         to: options.email,
         subject: options.subject,
         text: options.message,
-        // Add html for better email presentation
         html: `<p>${options.message.replace(/\n/g, '<br>')}</p>`,
     };
     const info = yield transporter.sendMail(message);
