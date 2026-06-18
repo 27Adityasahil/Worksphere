@@ -4,7 +4,7 @@ import { getAdminStats, getEmployeeStats } from '../controllers/dashboardControl
 
 const router = express.Router();
 
-router.get('/admin', protect, authorize('Admin'), getAdminStats);
+router.get('/admin', protect, authorize(UserRole.ADMIN), getAdminStats);
 router.get('/employee', protect, getEmployeeStats);
 
 export default router;

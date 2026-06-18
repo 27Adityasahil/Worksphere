@@ -24,9 +24,7 @@
     "multer": "^2.2.0",
     "nodemailer": "^9.0.1",
     "socket.io": "^4.8.3",
-    "strip-comments": "^2.0.1"
-  },
-  "devDependencies": {
+    "strip-comments": "^2.0.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
@@ -38,5 +36,6 @@
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^6.0.3"
-  }
+  },
+  "devDependencies": {}
 }

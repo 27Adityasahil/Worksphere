@@ -7,8 +7,8 @@ import {
   updatePayrollStatus
 } from '../controllers/payrollController';
 const router = express.Router();
-router.post('/', protect, authorize('Admin'), generatePayroll);
-router.get('/', protect, authorize('Admin'), getAllPayrolls);
+router.post('/', protect, authorize(UserRole.ADMIN), generatePayroll);
+router.get('/', protect, authorize(UserRole.ADMIN), getAllPayrolls);
 router.get('/me', protect, getMyPayrolls);
-router.put('/:id/status', protect, authorize('Admin'), updatePayrollStatus);
+router.put('/:id/status', protect, authorize(UserRole.ADMIN), updatePayrollStatus);
 export default router;

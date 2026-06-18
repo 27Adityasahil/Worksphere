@@ -3,5 +3,5 @@ import { protect, authorize } from '../middleware/authMiddleware';
 import { getSettings, updateSettings } from '../controllers/settingsController';
 const router = express.Router();
 router.get('/', protect, getSettings);
-router.put('/', protect, authorize('Admin'), updateSettings);
+router.put('/', protect, authorize(UserRole.ADMIN), updateSettings);
 export default router;
