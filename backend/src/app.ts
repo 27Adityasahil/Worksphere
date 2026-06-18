@@ -12,7 +12,7 @@ import dashboardRoutes from './routes/dashboardRoutes';
 dotenv.config();
 const app: Application = express();
 app.use(cors({
-  origin: 'http://localhost:5173', 
+  origin: ['http://localhost:5173', 'https://workspheree.vercel.app'], 
   credentials: true
 }));
 app.use(express.json());
