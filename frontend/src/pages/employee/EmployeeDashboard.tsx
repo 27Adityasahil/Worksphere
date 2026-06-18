@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Box, Typography, Paper, Grid, Button, CircularProgress, Alert, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -10,10 +10,10 @@ import { useGetEmployeeStatsQuery } from '../../store/api/dashboardApiSlice';
 const StatCard = ({ title, value, icon, color }: { title: string, value: string | number, icon: any, color: string }) => (
   <Paper sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderRadius: 2 }}>
     <Box>
-      <Typography color="text.secondary" variant="caption" display="block" gutterBottom>
+      <Typography color="text.secondary" variant="caption" sx={{ display: 'block' }} gutterBottom>
         {title}
       </Typography>
-      <Typography variant="h5" fontWeight="bold">
+      <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
         {value}
       </Typography>
     </Box>
@@ -43,7 +43,7 @@ const EmployeeDashboard = () => {
               lng: position.coords.longitude,
             });
           },
-          (error) => {
+          (_error) => {
             reject(new Error('Unable to retrieve your location. Please ensure location services are enabled.'));
           }
         );
@@ -99,7 +99,7 @@ const EmployeeDashboard = () => {
       )}
 
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={4}>
+        <Grid size={{ xs: 12, sm: 4 }}>
           <StatCard 
             title="Today's Status" 
             value={stats.todayAttendanceStatus || 'Not Clocked In'} 
@@ -107,7 +107,7 @@ const EmployeeDashboard = () => {
             color="#10b981" 
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid size={{ xs: 12, sm: 4 }}>
           <StatCard 
             title="Approved Leaves" 
             value={stats.approvedLeaves || 0} 
@@ -115,7 +115,7 @@ const EmployeeDashboard = () => {
             color="#2563eb" 
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid size={{ xs: 12, sm: 4 }}>
           <StatCard 
             title="Pending Leaves" 
             value={stats.pendingLeaves || 0} 
@@ -126,7 +126,7 @@ const EmployeeDashboard = () => {
       </Grid>
 
       <Grid container spacing={4}>
-        <Grid item xs={12} md={5} lg={4}>
+        <Grid size={{ xs: 12, md: 5, lg: 4 }}>
           <Paper sx={{ p: 4, borderRadius: 4, textAlign: 'center', height: '100%' }}>
             <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
               Time & Attendance
@@ -176,7 +176,7 @@ const EmployeeDashboard = () => {
             </Box>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={7} lg={8}>
+        <Grid size={{ xs: 12, md: 7, lg: 8 }}>
           <Paper sx={{ p: 0, borderRadius: 4, height: '100%', overflow: 'hidden' }}>
             <Box sx={{ p: 3, borderBottom: '1px solid #e2e8f0' }}>
               <Typography variant="h6" sx={{ fontWeight: 'bold' }}>

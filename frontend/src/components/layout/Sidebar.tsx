@@ -48,12 +48,8 @@ const Sidebar = () => {
                 </ListItemIcon>
                 <ListItemText 
                   primary={item.text} 
-                  slotProps={{
-                    primary: {
-                      fontWeight: location.pathname.includes(item.path) ? 'bold' : 'normal',
-                      color: location.pathname.includes(item.path) ? 'primary.main' : 'inherit'
-                    }
-                  }} 
+                  slotProps={{ primary: { sx: { fontWeight: location.pathname.includes(item.path) ? 'bold' : 'normal', color: location.pathname.includes(item.path) ? 'primary.main' : 'inherit'
+                     } } }} 
                 />
               </ListItemButton>
             </ListItem>

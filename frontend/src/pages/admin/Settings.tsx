@@ -84,7 +84,7 @@ const Settings = () => {
           </Button>
         </Box>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TextField
               fullWidth
               label="Latitude"
@@ -94,7 +94,7 @@ const Settings = () => {
               helperText="e.g. 40.7128"
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TextField
               fullWidth
               label="Longitude"
@@ -104,7 +104,7 @@ const Settings = () => {
               helperText="e.g. -74.0060"
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TextField
               fullWidth
               label="Allowed Radius (meters)"

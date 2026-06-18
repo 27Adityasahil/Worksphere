@@ -11,7 +11,7 @@ const StatCard = ({ title, value, icon, color }: { title: string, value: string 
       <Typography color="text.secondary" variant="subtitle2" gutterBottom>
         {title}
       </Typography>
-      <Typography variant="h4" fontWeight="bold">
+      <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
         {value}
       </Typography>
     </Box>
@@ -45,7 +45,7 @@ const Dashboard = () => {
         Dashboard Overview
       </Typography>
       <Grid container spacing={3} sx={{ mb: 6 }}>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <StatCard 
             title="Total Employees" 
             value={stats?.totalEmployees || 0} 
@@ -53,7 +53,7 @@ const Dashboard = () => {
             color="#2563eb" 
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <StatCard 
             title="Present Today" 
             value={stats?.todayAttendance || 0} 
@@ -61,7 +61,7 @@ const Dashboard = () => {
             color="#10b981" 
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <StatCard 
             title="Pending Leaves" 
             value={stats?.pendingLeaves || 0} 
@@ -69,7 +69,7 @@ const Dashboard = () => {
             color="#f59e0b" 
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <StatCard 
             title="Recent Violations" 
             value={violations.length} 

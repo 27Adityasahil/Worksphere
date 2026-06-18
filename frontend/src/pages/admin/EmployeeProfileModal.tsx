@@ -32,29 +32,29 @@ const EmployeeProfileModal = ({ open, onClose, employee }: EmployeeProfileModalP
         </Box>
         <Divider sx={{ my: 2 }} />
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid size={{ xs: 6 }}>
             <Typography variant="caption" color="text.secondary">Department</Typography>
             <Typography variant="body1" sx={{ fontWeight: 500 }}>{employee.department || 'N/A'}</Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid size={{ xs: 6 }}>
             <Typography variant="caption" color="text.secondary">Date of Joining</Typography>
             <Typography variant="body1" sx={{ fontWeight: 500 }}>
               {employee.dateOfJoining ? new Date(employee.dateOfJoining).toLocaleDateString() : 'N/A'}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Typography variant="caption" color="text.secondary">Email Address</Typography>
             <Typography variant="body1" sx={{ fontWeight: 500 }}>
               {employee.user?.email || 'N/A'}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Typography variant="caption" color="text.secondary">Phone Number</Typography>
             <Typography variant="body1" sx={{ fontWeight: 500 }}>
               {employee.contactNumber || 'N/A'}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Typography variant="caption" color="text.secondary">Address</Typography>
             <Typography variant="body1" sx={{ fontWeight: 500 }}>
               {employee.address || 'N/A'}

@@ -14,8 +14,8 @@ const EmployeeList = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<any>(null);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const { data: response, isLoading, isError, error } = useGetEmployeesQuery({});
-  const [createEmployee, { isLoading: isCreating }] = useCreateEmployeeMutation();
+  const { data: response, isLoading, isError } = useGetEmployeesQuery({});
+  const [createEmployee] = useCreateEmployeeMutation();
   const [formError, setFormError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<React.ReactNode | null>(null);
   const employees = response?.data || [];

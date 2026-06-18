@@ -3,7 +3,7 @@ import { useGetAllAttendanceQuery, useGetViolationsQuery } from '../../store/api
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 const AttendanceList = () => {
   const { data: response, isLoading, isError } = useGetAllAttendanceQuery({});
-  const { data: violationsResponse, isLoading: isLoadingViolations } = useGetViolationsQuery({});
+  const { data: violationsResponse } = useGetViolationsQuery({});
   const attendanceList = response?.data || [];
   const violationsList = violationsResponse?.data || [];
   return (
@@ -39,7 +39,7 @@ const AttendanceList = () => {
                       <TableCell>{new Date(record.date).toLocaleDateString()}</TableCell>
                       <TableCell>{new Date(record.attemptTime).toLocaleTimeString()}</TableCell>
                       <TableCell>
-                        <Typography variant="caption" display="block">
+                        <Typography variant="caption" sx={{ display: 'block' }}>
                           {record.location?.lat?.toFixed(4)}, {record.location?.lng?.toFixed(4)}
                         </Typography>
                       </TableCell>
@@ -92,11 +92,11 @@ const AttendanceList = () => {
                       {record.clockOut?.time ? new Date(record.clockOut.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '--'}
                     </TableCell>
                     <TableCell>
-                      <Typography variant="caption" color="text.secondary" display="block">
+                      <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                         In: {record.clockIn?.location?.lat?.toFixed(4)}, {record.clockIn?.location?.lng?.toFixed(4)}
                       </Typography>
                       {record.clockOut?.location && (
-                        <Typography variant="caption" color="text.secondary" display="block">
+                        <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                           Out: {record.clockOut?.location?.lat?.toFixed(4)}, {record.clockOut?.location?.lng?.toFixed(4)}
                         </Typography>
                       )}

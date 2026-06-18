@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Container, Grid, Paper, AppBar, Toolbar, useTheme } from '@mui/material';
+import { Box, Typography, Button, Container, Grid, Paper, AppBar, Toolbar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PeopleIcon from '@mui/icons-material/People';
 import EventNoteIcon from '@mui/icons-material/EventNote';
@@ -7,7 +7,6 @@ import SecurityIcon from '@mui/icons-material/Security';
 import dashboardPreview from '../assets/dashboard_preview.png';
 const Landing = () => {
   const navigate = useNavigate();
-  const theme = useTheme();
   return (
     <Box sx={{ minHeight: '100vh', backgroundColor: '#F8FAFC' }}>
       {}

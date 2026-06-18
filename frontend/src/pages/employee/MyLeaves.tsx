@@ -121,7 +121,7 @@ const MyLeaves = () => {
               </Alert>
             )}
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <TextField
                   select
                   fullWidth
@@ -137,7 +137,7 @@ const MyLeaves = () => {
                   <MenuItem value="Unpaid">Unpaid Leave</MenuItem>
                 </TextField>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
                   label="Start Date"
@@ -148,7 +148,7 @@ const MyLeaves = () => {
                   helperText={errors.startDate?.message}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
                   label="End Date"
@@ -159,7 +159,7 @@ const MyLeaves = () => {
                   helperText={errors.endDate?.message}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   multiline
