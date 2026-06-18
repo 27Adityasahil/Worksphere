@@ -27,7 +27,9 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 export const logoutUser = async (req: Request, res: Response): Promise<void> => {
   res.cookie('jwt', '', {
     httpOnly: true,
-    expires: new Date(0)
+    expires: new Date(0),
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: 'none'
   });
   res.status(200).json({ success: true, message: 'Logged out successfully' });
 };
