@@ -4,26 +4,16 @@ WorkSphere is a full-stack Human Resource Management System designed to simplify
 
 The platform includes dedicated portals for administrators and employees with automated onboarding, secure authentication, real-time updates, and data-driven analytics.
 
----
 
-## Live Demo
-
-Live Application: Coming Soon  
-GitHub Repository: Coming Soon  
 
 ---
-<img width="1529" height="766" alt="image" src="https://github.com/user-attachments/assets/b9dfba58-a9c8-408d-aebd-7470b4344534" />
+<img width="1521" height="775" alt="image" src="https://github.com/user-attachments/assets/be2a9a70-340a-4568-972a-eb7e0875de1b" />
 
 ---
-<img width="1536" height="777" alt="image" src="https://github.com/user-attachments/assets/f8def642-dc84-40eb-8613-d230c0d22cf8" />
+<img width="1521" height="776" alt="image" src="https://github.com/user-attachments/assets/b4198892-9a4a-4266-b1c6-08a7eead26c1" />
 
 ---
-<img width="1536" height="778" alt="image" src="https://github.com/user-attachments/assets/5b0842cf-86d4-40d7-ad1f-8fdcb41e86d1" />
 
----
-<img width="1536" height="779" alt="image" src="https://github.com/user-attachments/assets/4641fce0-f647-4163-99cd-244a4baaf6b8" />
-
----
 
 ## Overview
 

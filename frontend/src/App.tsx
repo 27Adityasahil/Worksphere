@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ServerStatusProvider } from './store/ServerStatusProvider';
+import ServerStatusIndicator from './components/common/ServerStatusIndicator';
+import ServerConnectionBlocker from './components/common/ServerConnectionBlocker';
 import AuthLayout from './components/layout/AuthLayout';
 import LoginForm from './components/auth/LoginForm';
 import AdminLayout from './components/layout/AdminLayout';
@@ -15,40 +18,60 @@ import EmployeeLayout from './components/layout/EmployeeLayout';
 import EmployeeDashboard from './pages/employee/EmployeeDashboard';
 import MyLeaves from './pages/employee/MyLeaves';
 import MyPayslips from './pages/employee/MyPayslips';
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {}
-        <Route path="/" element={<Landing />} />
-        {}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/login/admin" element={<LoginForm type="admin" />} />
-          <Route path="/login/employee" element={<LoginForm type="employee" />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-        </Route>
-        {}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="dashboard" replace />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="employees" element={<EmployeeList />} />
-          <Route path="attendance" element={<AttendanceList />} />
-          <Route path="leaves" element={<LeaveRequests />} />
-          <Route path="payroll" element={<PayrollList />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
-        {}
-        <Route path="/employee" element={<EmployeeLayout />}>
-          <Route index element={<Navigate to="/employee/dashboard" replace />} />
-          <Route path="dashboard" element={<EmployeeDashboard />} />
-          <Route path="leaves" element={<MyLeaves />} />
-          <Route path="payroll" element={<MyPayslips />} />
-        </Route>
-        {}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <ServerStatusProvider>
+      <ServerStatusIndicator />
+      <BrowserRouter>
+        <Routes>
+          {}
+          <Route path="/" element={<Landing />} />
+          {}
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/login/admin" element={
+              <ServerConnectionBlocker>
+                <LoginForm type="admin" />
+              </ServerConnectionBlocker>
+            } />
+            <Route path="/login/employee" element={
+              <ServerConnectionBlocker>
+                <LoginForm type="employee" />
+              </ServerConnectionBlocker>
+            } />
+            <Route path="/reset-password" element={<ResetPassword />} />
+          </Route>
+          {}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={
+              <ServerConnectionBlocker>
+                <Dashboard />
+              </ServerConnectionBlocker>
+            } />
+            <Route path="employees" element={<EmployeeList />} />
+            <Route path="attendance" element={<AttendanceList />} />
+            <Route path="leaves" element={<LeaveRequests />} />
+            <Route path="payroll" element={<PayrollList />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+          {}
+          <Route path="/employee" element={<EmployeeLayout />}>
+            <Route index element={<Navigate to="/employee/dashboard" replace />} />
+            <Route path="dashboard" element={
+              <ServerConnectionBlocker>
+                <EmployeeDashboard />
+              </ServerConnectionBlocker>
+            } />
+            <Route path="leaves" element={<MyLeaves />} />
+            <Route path="payroll" element={<MyPayslips />} />
+          </Route>
+          {}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </ServerStatusProvider>
   );
 }
 export default App;

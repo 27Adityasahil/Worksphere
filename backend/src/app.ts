@@ -2,6 +2,7 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import mongoose from 'mongoose';
 import authRoutes from './routes/authRoutes';
 import employeeRoutes from './routes/employeeRoutes';
 import attendanceRoutes from './routes/attendanceRoutes';
@@ -25,6 +26,21 @@ app.use('/api/leaves', leaveRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/payroll', payrollRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.get('/api/health', (req: Request, res: Response) => {
+  const dbState = mongoose.connection.readyState;
+  let dbStatus = 'disconnected';
+  if (dbState === 1) dbStatus = 'connected';
+  else if (dbState === 2) dbStatus = 'connecting';
+
+  res.json({
+    status: 'online',
+    service: 'WorkSphere API',
+    database: dbStatus,
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
 app.get('/', (req: Request, res: Response) => {
   res.send('WorkSphere API is running...');
 });
