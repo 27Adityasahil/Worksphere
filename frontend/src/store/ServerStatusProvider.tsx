@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import axios from 'axios';
 
 export type ServerStatus = 'ONLINE' | 'CONNECTING' | 'OFFLINE';
@@ -13,7 +13,7 @@ export const ServerStatusProvider: React.FC<{ children: ReactNode }> = ({ childr
   const [status, setStatus] = useState<ServerStatus>('CONNECTING');
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     const checkServerHealth = async () => {
       try {
